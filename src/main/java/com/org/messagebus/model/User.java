@@ -52,6 +52,15 @@ public class User implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;

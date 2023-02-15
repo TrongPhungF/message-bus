@@ -3,7 +3,6 @@ package com.org.messagebus.messagebus;
 import com.org.messagebus.model.User;
 import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.MessagingGateway;
-import org.springframework.messaging.Message;
 
 import java.util.List;
 
@@ -11,12 +10,12 @@ import java.util.List;
 public interface UserGatewayService {
 
     @Gateway(requestChannel = "addUserInputChannel")
-    User addUser(User user);
+    void addUser(User user);
+
+    @Gateway(requestChannel = "getAllUsersInputChannel", replyChannel = "gettAllUserOutputChannel")
+    List<User> getAllUsers();
 
 
-
-//    @Gateway(requestChannel = "getAllUsersInputChannel", replyChannel = "getAllUsersOutputChannel")
-//    List<User> getAllUsers();
 //
 //    @Gateway(requestChannel = "getUserByIdInputChannel", replyChannel = "getUserByIdOutputChannel")
 //    User getUserById(Long id);

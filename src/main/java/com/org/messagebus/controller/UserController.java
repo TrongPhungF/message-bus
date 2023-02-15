@@ -5,7 +5,10 @@ import com.org.messagebus.model.User;
 import com.org.messagebus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -17,6 +20,11 @@ public class UserController {
     public void addUser(@RequestBody User user) {
         System.out.println("user: " + user);
         userGatewayService.addUser(user);
+    }
+
+    @GetMapping("/users")
+    public List<User> getAllUser() {
+        return userGatewayService.getAllUsers();
     }
 
 }

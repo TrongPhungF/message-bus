@@ -7,15 +7,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public class UserGateWayImpl implements UserGatewayService{
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
     @Override
-    public User addUser(User user) {
-       return userService.addUser(user);
+    public void addUser(User user) {
+        userService.addUser(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userService.findAll();
     }
 
 //    @Override

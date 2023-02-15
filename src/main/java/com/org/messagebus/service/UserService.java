@@ -8,22 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class UserService {
-    private final UserRepository userRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+public interface UserService {
 
-    public User addUser(User user) {
-        return userRepository.save(user);
-    }
+    void addUser(User user);
+    List<User> findAll();
 
-
-//        List<User> findAll();
-//
 //        User findById(Long id);
 //
 //        void deleteById(Long id);

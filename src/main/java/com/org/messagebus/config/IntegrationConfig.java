@@ -1,29 +1,41 @@
 package com.org.messagebus.config;
 
-import com.org.messagebus.messagebus.UserGatewayService;
 import com.org.messagebus.service.UserService;
-import org.apache.catalina.filters.ExpiresFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
-import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
-import org.springframework.integration.handler.ServiceActivatingHandler;
-import org.springframework.integration.http.dsl.Http;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHandler;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 
 @Configuration
 public class IntegrationConfig {
+    @Autowired
+    private UserService userService;
 
     @Bean
-    public IntegrationFlow addUserFlow(UserService  userService) {
+    public MappingJackson2JsonView jsonView() {
+        MappingJackson2JsonView view = new MappingJackson2JsonView();
+        view.setPrettyPrint(true);
+        return view;
+    }
+
+    @Bean
+    public IntegrationFlow addUserFlow( ) {
         return IntegrationFlows.from("addUserInputChannel")
                 .handle(userService, "addUser")
                 .get();
     }
+    @Bean
+    public IntegrationFlow getAllUserFlow() {
+        return IntegrationFlows.from("gettAllUserInputChannel")
+                .handle(userService, "findAll")
+                .handle("jsonView", "render")
+                .get();
+    }
+
+
 }
